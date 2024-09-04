@@ -171,10 +171,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: helico
       objectReference: {fileID: 0}
+    - target: {fileID: 3086474930027287527, guid: ce9728322dfb5cc49a005a957d8eb8c9, type: 3}
+      propertyPath: m_Name
+      value: Helice_avant
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ce9728322dfb5cc49a005a957d8eb8c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 826600224}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ce9728322dfb5cc49a005a957d8eb8c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 826600225}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ce9728322dfb5cc49a005a957d8eb8c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 826600226}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ce9728322dfb5cc49a005a957d8eb8c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 826600227}
     - targetCorrespondingSourceObject: {fileID: -723093586985912345, guid: ce9728322dfb5cc49a005a957d8eb8c9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1437374157}
@@ -226,9 +242,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5000001
-  m_Height: 2
+  m_Height: 25.310734
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0.000000047683717, y: -0.0000024138192, z: -0.00000009536743}
 --- !u!23 &247641527
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -290,7 +306,7 @@ Transform:
   m_GameObject: {fileID: 247641525}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 526.2533, y: 438.75528, z: 651.1963}
+  m_LocalPosition: {x: 526.2533, y: 438.78, z: 651.1963}
   m_LocalScale: {x: 10, y: 0.3950894, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -316,6 +332,7 @@ MonoBehaviour:
   vitesseRotation: {x: 0, y: 0, z: 0}
   vitesseMax: 30
   acceleration: 0.02
+  moteurEnMarche: 0
 --- !u!1 &676255473
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,6 +568,96 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727212111}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &826600220 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ce9728322dfb5cc49a005a957d8eb8c9, type: 3}
+  m_PrefabInstance: {fileID: 4968785}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &826600224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826600220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18f060ec3b3eb9d46a0db58fef837660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vitesseTourne: 0
+  vitesseMonte: 0
+  vitesseAvant: 0
+  helice: {fileID: 1437374153}
+  forceAcceleration: 0
+  vitesseMax: 0
+--- !u!54 &826600225
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826600220}
+  serializedVersion: 4
+  m_Mass: 100
+  m_Drag: 1
+  m_AngularDrag: 2
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!64 &826600226
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826600220}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1646434360048769761, guid: ce9728322dfb5cc49a005a957d8eb8c9, type: 3}
+--- !u!114 &826600227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826600220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18f060ec3b3eb9d46a0db58fef837660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vitesseTourne: 1000
+  vitesseMonte: 1000
+  vitesseAvant: 0
+  helice: {fileID: 1437374153}
+  forceAcceleration: 0
+  vitesseMax: 0
 --- !u!1 &834697244
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,6 +913,7 @@ MonoBehaviour:
   vitesseRotation: {x: 0, y: 0, z: 0}
   vitesseMax: 20
   acceleration: 0.02
+  moteurEnMarche: 0
 --- !u!1001 &1475160026
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -900,6 +1008,7 @@ GameObject:
   - component: {fileID: 1487715157}
   - component: {fileID: 1487715156}
   - component: {fileID: 1487715155}
+  - component: {fileID: 1487715159}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -995,6 +1104,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1487715159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487715154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af44f105e5edc3740a2d4f70376a37ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1542443732
 PrefabInstance:
   m_ObjectHideFlags: 0

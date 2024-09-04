@@ -8,7 +8,7 @@ public class TournerHelice : MonoBehaviour
     public float vitesseMax;
     public float acceleration;
 
-    bool moteurEnMarche;
+    public bool moteurEnMarche;
 
     void Start()
     {
