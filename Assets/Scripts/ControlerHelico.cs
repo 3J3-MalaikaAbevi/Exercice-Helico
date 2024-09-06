@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class ControlerHelico : MonoBehaviour
 {
+    [Header ("PROPRIÉTÉS DE VITESSE")]
     public float vitesseTourne;
     public float vitesseMonte;
     public float vitesseAvant;
-
-    public GameObject helice;
-
-    float forceRotation;
-    float forceMonte;
     public float forceAcceleration;
-
+    float forceMonte;
+    [SerializeField] float forceRotation;
     public float vitesseMax;
+
+    [Header ("OBJETS UTILES")]
+    public GameObject helice;
 
     void Update()
     {
