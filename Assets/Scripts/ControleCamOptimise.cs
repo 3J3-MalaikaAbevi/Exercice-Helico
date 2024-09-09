@@ -1,9 +1,15 @@
+/* Fonctionnement et utilité générale du script
+   Par : Malaïka Abevi
+   Dernière modification : 08/09/2024
+*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ControleCamOptimise : MonoBehaviour
 {
+    //Déclarations des variables  
     public GameObject[] lesCameras;
 
     void Start()

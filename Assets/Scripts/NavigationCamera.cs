@@ -1,9 +1,17 @@
-﻿using System.Collections;
+﻿/* Fonctionnement et utilité générale du script
+ * Deplacement de la caméra avec la souris et les touche du clavier 
+ * (Script utile avant la création et la gestion des autres caméras)***
+   Par : Malaïka Abevi
+   Dernière modification : 08/09/2024
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NavigationCamera : MonoBehaviour {
-
+public class NavigationCamera : MonoBehaviour 
+{
+    //Déclarations des variables 
     public float vitesseRotationSouris = 2.0f;
     public float vitesseDeDeplacement = 0.5f;
 

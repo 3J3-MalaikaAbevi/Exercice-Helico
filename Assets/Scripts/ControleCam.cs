@@ -1,9 +1,17 @@
+/* Fonctionnement et utilité générale du script
+ * Script non-optimisé de la gestion des caméras
+ * Voir le script ----> ControleCamOptimise.cs ****
+   Par : Malaïka Abevi
+   Dernière modification : 08/09/2024
+*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ControleCam : MonoBehaviour
 {
+    //Déclarations des variables 
     public GameObject cam1;
     public GameObject cam2;
     public GameObject cam3;
