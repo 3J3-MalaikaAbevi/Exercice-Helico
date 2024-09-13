@@ -7,7 +7,9 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ControlerHelico : MonoBehaviour
 {
@@ -25,6 +27,11 @@ public class ControlerHelico : MonoBehaviour
 
     [Header ("OBJETS UTILES")]
     public GameObject refHelice; //Le GameObject de référence pour l'accès au script de la rotation des hélices
+    public GameObject heliceAvant; //Le 
+    public GameObject heliceArriere; //Le 
+    public GameObject explosion;  //Variable pour l'explosion (animation/particules) de l'hélico
+    public GameObject controleCam; 
+    public AudioClip sonBidon;  //Le son pour le bidon
 
 
     //Gestion des touches pour contrôler l'hélico///////////////////
@@ -74,8 +81,40 @@ public class ControlerHelico : MonoBehaviour
         }
         else if(!refHelice.GetComponent<TournerHelice>().moteurEnMarche) //Sinon, si le moteur de l'hélico est en arrêt, l'hélico chute 
         {
-            GetComponent<Rigidbody>().useGravity = true;  //Réactivation de l'hélico
+            GetComponent<Rigidbody>().useGravity = true;  //Réactivation de la gravité de l'hélico
             //print("on chute !");
         }
+    }
+
+    void OnTriggerEnter(Collider infoCollider){
+        if(infoCollider.gameObject.name == "bidon3D"){
+            Destroy(infoCollider.gameObject);
+            GetComponent<AudioSource>().PlayOneShot(sonBidon);
+        }
+    }
+
+    void OnCollisionEnter(Collision infoCollision){
+
+        float vitesseDeplacement = GetComponent<Rigidbody>().velocity.magnitude;
+        print(vitesseDeplacement);
+
+        if(infoCollision.gameObject.tag == "Decor" && vitesseDeplacement > 1){
+            explosion.SetActive(true);
+            GetComponent<Rigidbody>().useGravity = true; //Réactivation de la gravité de l'hélico
+            GetComponent<Rigidbody>().drag = 0;
+            GetComponent<Rigidbody>().angularDrag = 0;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;            
+            heliceAvant.GetComponent<TournerHelice>().moteurEnMarche = false;
+            heliceArriere.GetComponent<TournerHelice>().moteurEnMarche = false;
+            controleCam.GetComponent<ControleCamOptimise>().ActiverCam(2);
+            vitesseAvant = 0;
+
+            Invoke("Relancer", 8f);
+        }
+    }
+
+    void Relancer(){
+        Scene laScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(laScene.name);
     }
 }
