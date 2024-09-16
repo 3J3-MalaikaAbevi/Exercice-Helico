@@ -31,37 +31,47 @@ public class ControlerHelico : MonoBehaviour
     public GameObject heliceArriere; //Le 
     public GameObject explosion;  //Variable pour l'explosion (animation/particules) de l'hélico
     public GameObject controleCam; 
-    public AudioClip sonBidon;  //Le son pour le bidon
 
+    [Header ("LES AUDIOCLIPS")]
+    public AudioSource laSourceAudio; //Variable pour le component de l'AudioSource de l'hélico
+    public AudioClip sonBidon;  //Le son pour le bidon
+    public AudioClip sonHelico; //Le son pour le bruit de l'hélico lorsque le moteur est en marche
+
+    public Mesh helicoAccidente; //Mesh accidenté lorsque l'hélico explose
+    
+    bool finJeu;  //Variable de type booléenne pour savoir si la partie est terminé ou non
 
     //Gestion des touches pour contrôler l'hélico///////////////////
     void Update()
-    {
-        /*On veut que la force de rotation s'accentue au fur et a mesure que l'on
-          presse les touches qui contrôle à l'horizontale (gauche - droite & A - D)*/
-        forceRotation = Input.GetAxis("Horizontal") * vitesseTourne;
-        /*On veut que la force de montée s'accentue au fur et a mesure que l'on
-          presse les touches qui contrôle à la verticale (haut - bas & W - S)*/
-        forceMonte = Input.GetAxis("Vertical") * vitesseMonte;
+    {   
+        //Si la partie n'est pas finie, on peut utiliser les touches
+        if(!finJeu){
+            /*On veut que la force de rotation s'accentue au fur et a mesure que l'on
+            presse les touches qui contrôle à l'horizontale (gauche - droite & A - D)*/
+            forceRotation = Input.GetAxis("Horizontal") * vitesseTourne;
+            /*On veut que la force de montée s'accentue au fur et a mesure que l'on
+            presse les touches qui contrôle à la verticale (haut - bas & W - S)*/
+            forceMonte = Input.GetAxis("Vertical") * vitesseMonte;
 
-        //Si la touche E est pressée et que la vitesse maximale n'est pas atteinte, alors l'hélico accélère 
-        if (Input.GetKey(KeyCode.E) && vitesseAvant < vitesseAvantMax)
-        {
-            vitesseAvant += forceAcceleration;
-            vitesseMonte += vitesseAvant * 0.0005f;
+            //Si la touche E est pressée et que la vitesse maximale n'est pas atteinte, alors l'hélico accélère 
+            if (Input.GetKey(KeyCode.E) && vitesseAvant < vitesseAvantMax)
+            {
+                vitesseAvant += forceAcceleration;
+                vitesseMonte += vitesseAvant * 0.0005f;
+            }
+
+            //Si la touche Q est pressée et que la vitesse est plus grande que 0, alors l'hélico décélère 
+            if (Input.GetKey(KeyCode.Q) && vitesseAvant > 0)
+            {
+                vitesseAvant -= forceAcceleration;
+                vitesseMonte -= vitesseAvant * 0.0005f;
+            }
         }
-
-        //Si la touche Q est pressée et que la vitesse est plus grande que 0, alors l'hélico décélère 
-        if (Input.GetKey(KeyCode.Q) && vitesseAvant > 0)
-        {
-            vitesseAvant -= forceAcceleration;
-            vitesseMonte -= vitesseAvant * 0.0005f;
-        }
-
         /*On s'assure que l'hélico fait uniquement des rotations en Y (gauche-droite pour les rotations)
           Alors, on force la rotation à 0f pour X et Z et on utilise les localEulerAngles, 
           plus optimals pour la 3d et contrer les bogues */
         transform.localEulerAngles = new Vector3(0f, transform.localEulerAngles.y, 0f);
+
     }
    
     //On utilise le FixedUpdate pour un rythme d'update constant, plus approprié pour appliquer des forces
@@ -84,12 +94,27 @@ public class ControlerHelico : MonoBehaviour
             GetComponent<Rigidbody>().useGravity = true;  //Réactivation de la gravité de l'hélico
             //print("on chute !");
         }
+
+        
+        ////GESTION DU SON DE L'HÉLICO****************/
+        //On augmente ou diminue le volume du bruit graduellement en se référent à la vitesse de rotation de l'hélico
+        laSourceAudio.volume = vitesseHelice/10;
+        print(laSourceAudio.volume); //Ça a l'air de fonctionner -> juste vérifier sur ordi avec son
+
+        //On augmente ou diminue le volume du bruit graduellement en se référent à la vitesse de rotation de l'hélico
+        laSourceAudio.pitch = vitesseHelice/10;
+
+        //On ramène la valeur du pitch à 0,5 lorsqu'il diminue au plus bas (On veut que la limite minimal du pitch soit à 0,5)
+        if(laSourceAudio.pitch < 0.5f){
+            laSourceAudio.pitch = 0.5f;
+        }
+ 
     }
 
     void OnTriggerEnter(Collider infoCollider){
-        if(infoCollider.gameObject.name == "bidon3D"){
+        if(infoCollider.gameObject.name == "bidon"){
             Destroy(infoCollider.gameObject);
-            GetComponent<AudioSource>().PlayOneShot(sonBidon);
+            GetComponent<AudioSource>().PlayOneShot(sonBidon); 
         }
     }
 
@@ -106,8 +131,13 @@ public class ControlerHelico : MonoBehaviour
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;            
             heliceAvant.GetComponent<TournerHelice>().moteurEnMarche = false;
             heliceArriere.GetComponent<TournerHelice>().moteurEnMarche = false;
+            laSourceAudio.Stop();
             controleCam.GetComponent<ControleCamOptimise>().ActiverCam(2);
             vitesseAvant = 0;
+            //GetComponent<MeshRenderer> ().material.color = new Color (?, ?, ?, 1); //(R,G,B,Alpha) 
+            GetComponent<MeshRenderer>().material.color = new Color (0.389937f, 0.040465f, 0.2214171f, 1); //(R,G,B,Alpha) 
+            GetComponent<MeshFilter>().mesh = helicoAccidente;
+            
 
             Invoke("Relancer", 8f);
         }

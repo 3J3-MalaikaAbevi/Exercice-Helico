@@ -16,7 +16,7 @@ public class ControleCamOptimise : MonoBehaviour
     void Start()
     {
         //Au d�part, la 1�re cam�ra est active et les autres sont d�sactiv�es
-        ActiverCam(0); // ******le 0 correspond � la premi�re position dans un tableau*******
+        ActiverCam(0); // ******le 0 correspond à la premi�re position dans un tableau*******
     }
 
     // Update is called once per frame
@@ -45,6 +45,10 @@ public class ControleCamOptimise : MonoBehaviour
         {
             ActiverCam(3);
         }
+
+
+    //GESTION DE L'AUDIOLISTENER
+    AudioListener.pause = true; //Pour mettre le son global du jeu à 0
         
     }
 
