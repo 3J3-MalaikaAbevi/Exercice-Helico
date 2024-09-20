@@ -7,9 +7,9 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ControlerHelico : MonoBehaviour
 {
@@ -38,8 +38,17 @@ public class ControlerHelico : MonoBehaviour
     public AudioClip sonHelico; //Le son pour le bruit de l'hélico lorsque le moteur est en marche
 
     public Mesh helicoAccidente; //Mesh accidenté lorsque l'hélico explose
+
+    public float essenceActuel;
+    public float essenceMax;
+    public Image niveauEssence;
     
     bool finJeu;  //Variable de type booléenne pour savoir si la partie est terminé ou non
+
+
+    void Start(){
+        essenceActuel = essenceMax;
+    }
 
     //Gestion des touches pour contrôler l'hélico///////////////////
     void Update()
@@ -71,6 +80,10 @@ public class ControlerHelico : MonoBehaviour
           Alors, on force la rotation à 0f pour X et Z et on utilise les localEulerAngles, 
           plus optimals pour la 3d et contrer les bogues */
         transform.localEulerAngles = new Vector3(0f, transform.localEulerAngles.y, 0f);
+
+        essenceActuel -= 0.01f;
+        float pourcentage = essenceActuel/essenceMax;
+        niveauEssence.fillAmount = pourcentage;
 
     }
    
@@ -112,9 +125,11 @@ public class ControlerHelico : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider infoCollider){
+        //GESTION DE LA COLLECT DE BIDON
         if(infoCollider.gameObject.name == "bidon"){
-            Destroy(infoCollider.gameObject);
-            GetComponent<AudioSource>().PlayOneShot(sonBidon); 
+            Destroy(infoCollider.gameObject); //On fait disparaître le bidon
+            GetComponent<AudioSource>().PlayOneShot(sonBidon); //On fait jouer une fois le son du bidon recolté
+            essenceActuel += 100; //On augmente la quantité d'essence de l'hélico
         }
     }
 
