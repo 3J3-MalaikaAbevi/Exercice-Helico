@@ -1,8 +1,8 @@
-/* Fonctionnement et utilité générale du script
-   Gestion de la rotation d'une hélice
-   Gestion du démarrage et de l'arrêt, de la vitesse et de l'accélération d'une hélice
-   Par : Malaïka Abevi
-   Dernière modification : 08/09/2024
+/* Fonctionnement et utilitÃ© gÃ©nÃ©rale du script
+   Gestion de la rotation d'une hÃ©lice
+   Gestion du dÃ©marrage et de l'arrÃ©t, de la vitesse et de l'accÃ©lÃ©ration d'une hÃ©lice
+   Par : MalaÃ¯ka Abevi
+   DerniÃ¨re modification : 08/09/2024
 */
 
 using System.Collections;
@@ -11,16 +11,16 @@ using UnityEngine;
 
 public class TournerHelice : MonoBehaviour
 {
-    //Déclarations des variables 
-    public Vector3 vitesseRotation;   //Variable Vector3 pour la gestion de la vitesse de rotation de l'hélice
-    public float vitesseMax;    //Variable float pour définir la vitesse de rotation maximale que peut atteindre l'hélice
-    public float acceleration;    //Variable float pour la gestion de l'accéleration de la rotation de l'hélice
+    //DÃ©clarations des variables 
+    public Vector3 vitesseRotation;   //Variable Vector3 pour la gestion de la vitesse de rotation de l'hÃ©lice
+    public float vitesseMax;    //Variable float pour dÃ©finir la vitesse de rotation maximale que peut atteindre l'hÃ©lice
+    public float acceleration;    //Variable float pour la gestion de l'accÃ©leration de la rotation de l'hÃ©lice
 
-    public bool moteurEnMarche;    //Variable booléenne pour déterminer si le moteur de l'hélicopter est en marche ou non
+    public bool moteurEnMarche;    //Variable boolÃ©enne pour dÃ©terminer si le moteur de l'hÃ©licopter est en marche ou non
 
     void Update()
     {
-        //Si la touche Entrer est appuyée, on démarre ou arrête le moteur
+        //Si la touche Entrer est appuyÃ©e, on dÃ©marre ou arrÃ©te le moteur
         if (Input.GetKeyDown(KeyCode.Return))
         {
             moteurEnMarche = !moteurEnMarche;
@@ -30,20 +30,20 @@ public class TournerHelice : MonoBehaviour
         if (moteurEnMarche)
         {
             /*Et si la vitesse de rotation en Y est en dessous de la vitesse maximale de rotation,
-              on incrémente la vitesse de rotation en Y avec la valeur d'accélération*/ 
+              on incrÃ©mente la vitesse de rotation en Y avec la valeur d'accÃ©lÃ©ration*/ 
             if (vitesseRotation.y < vitesseMax) vitesseRotation.y += acceleration;
         }
         else //Si le moteur n'est pas en marche...
         {
-            //Et que si la vitesse de rotation en Y est plus grand que 0, alors on décrémente avec la valeur d'accélération
+            //Et que si la vitesse de rotation en Y est plus grand que 0, alors on dÃ©crÃ©mente avec la valeur d'accÃ©lÃ©ration
             if (vitesseRotation.y > 0) vitesseRotation.y -= acceleration;
         }
 
-        /*Pour éviter que l'hélice aille dans le sens inverse (surtout lors de la décélération),
-          si la vitesse de rotation en Y est plus petit que 0, alors on ramène la valeur à 0 (arrêt) */
+        /*Pour Ã©viter que l'hÃ©lice aille dans le sens inverse (surtout lors de la dÃ©cÃ©lÃ©ration),
+          si la vitesse de rotation en Y est plus petit que 0, alors on ramÃ©ne la valeur Ã© 0 (arrÃ©t) */
         if(vitesseRotation.y < 0) vitesseRotation.y = 0;
 
-        //Puis on fait tourner l'hélice en appliquant la vitesse de rotation actuelle (variable Vector 3)
+        //Puis on fait tourner l'hÃ©lice en appliquant la vitesse de rotation actuelle (variable Vector 3)
         transform.Rotate(vitesseRotation);
     }
 

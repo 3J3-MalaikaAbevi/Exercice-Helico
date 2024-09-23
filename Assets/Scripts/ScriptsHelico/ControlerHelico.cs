@@ -39,15 +39,15 @@ public class ControlerHelico : MonoBehaviour
 
     public Mesh helicoAccidente; //Mesh accidenté lorsque l'hélico explose
 
-    public float essenceActuel;
+    public float quantiteEssence;
     public float essenceMax;
-    public Image niveauEssence;
+    public Image niveauEssenceIMG;
     
     bool finJeu;  //Variable de type booléenne pour savoir si la partie est terminé ou non
 
 
     void Start(){
-        essenceActuel = essenceMax;
+        quantiteEssence = essenceMax;
     }
 
     //Gestion des touches pour contrôler l'hélico///////////////////
@@ -80,11 +80,6 @@ public class ControlerHelico : MonoBehaviour
           Alors, on force la rotation à 0f pour X et Z et on utilise les localEulerAngles, 
           plus optimals pour la 3d et contrer les bogues */
         transform.localEulerAngles = new Vector3(0f, transform.localEulerAngles.y, 0f);
-
-        essenceActuel -= 0.01f;
-        float pourcentage = essenceActuel/essenceMax;
-        niveauEssence.fillAmount = pourcentage;
-
     }
    
     //On utilise le FixedUpdate pour un rythme d'update constant, plus approprié pour appliquer des forces
@@ -121,7 +116,12 @@ public class ControlerHelico : MonoBehaviour
         if(laSourceAudio.pitch < 0.5f){
             laSourceAudio.pitch = 0.5f;
         }
- 
+
+        //GESTION DE L'ESSENCE
+        //Si le moteur est en marche, on veut appeler la fonction qui gère l'essence
+        if(heliceArriere.GetComponent<TournerHelice>().moteurEnMarche){
+            GestionEssence();
+        }
     }
 
     void OnTriggerEnter(Collider infoCollider){
@@ -129,7 +129,7 @@ public class ControlerHelico : MonoBehaviour
         if(infoCollider.gameObject.name == "bidon"){
             Destroy(infoCollider.gameObject); //On fait disparaître le bidon
             GetComponent<AudioSource>().PlayOneShot(sonBidon); //On fait jouer une fois le son du bidon recolté
-            essenceActuel += 100; //On augmente la quantité d'essence de l'hélico
+            quantiteEssence += 30; //On augmente la quantité d'essence de l'hélico
         }
     }
 
@@ -139,6 +139,16 @@ public class ControlerHelico : MonoBehaviour
         print(vitesseDeplacement);
 
         if(infoCollision.gameObject.tag == "Decor" && vitesseDeplacement > 1){
+            ExploserHelico(); //On appelle la fonction pour l'explosion de l'hélico 
+        }
+
+        if(infoCollision.gameObject.tag == "Decor" && vitesseDeplacement < 1 && quantiteEssence >= 0){
+            Invoke("Relancer", 5f);
+        }
+    }
+
+    //Script pour exploser l'hélico
+    public void ExploserHelico(){
             explosion.SetActive(true);
             GetComponent<Rigidbody>().useGravity = true; //Réactivation de la gravité de l'hélico
             GetComponent<Rigidbody>().drag = 0;
@@ -152,12 +162,26 @@ public class ControlerHelico : MonoBehaviour
             //GetComponent<MeshRenderer> ().material.color = new Color (?, ?, ?, 1); //(R,G,B,Alpha) 
             GetComponent<MeshRenderer>().material.color = new Color (0.389937f, 0.040465f, 0.2214171f, 1); //(R,G,B,Alpha) 
             GetComponent<MeshFilter>().mesh = helicoAccidente;
-            
 
-            Invoke("Relancer", 8f);
+            Invoke("Relancer", 8f); //Puis on appele après 8 secondes la fonction pour relancer la partie
+    }
+
+    void GestionEssence(){
+        if(quantiteEssence > essenceMax){
+            quantiteEssence = essenceMax;
+        }
+
+        quantiteEssence -= 0.01f;
+        float pourcentage = quantiteEssence/essenceMax;
+        niveauEssenceIMG.fillAmount = pourcentage;
+
+        if(quantiteEssence >= 0){
+            heliceAvant.GetComponent<TournerHelice>().moteurEnMarche = false;
+            heliceArriere.GetComponent<TournerHelice>().moteurEnMarche = false;
         }
     }
 
+    //Script pour relancer la partie
     void Relancer(){
         Scene laScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(laScene.name);

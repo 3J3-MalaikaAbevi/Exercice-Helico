@@ -1,7 +1,7 @@
-/* Fonctionnement et utilit� g�n�rale du script
- * Script optimis� de la gestion des cam�ras
-   Par : Mala�ka Abevi
-   Derni�re modification : 08/09/2024
+/* Fonctionnement et utilité générale du script
+ * Script optimisé de la gestion des caméras
+   Par : Malaïka Abevi
+   Dernière modification : 08/09/2024
 */
 
 using System.Collections;
@@ -11,12 +11,12 @@ using UnityEngine;
 public class ControleCamOptimise : MonoBehaviour
 {
     //D�clarations des variables  
-    public GameObject[] lesCameras; //Tableau pour enregistrer les cam�ras � controler, bien plus optimale
+    public GameObject[] lesCameras; //Tableau pour enregistrer les caméras é controler, bien plus optimale
 
     void Start()
     {
-        //Au d�part, la 1�re cam�ra est active et les autres sont d�sactiv�es
-        ActiverCam(0); // ******le 0 correspond à la premi�re position dans un tableau*******
+        //Au départ, la 1ère caméra est active et les autres sont désactivées
+        ActiverCam(1); 
     }
 
     // Update is called once per frame
@@ -24,23 +24,23 @@ public class ControleCamOptimise : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //Au lieu de tout r��crire, on appelle la fonction Start()
+            //Si la touche 1 est pressée, la fonction ActiverCam() est appeler pour activer la caméra 1
+            ActiverCam(0); // ******le 0 correspond à la premiére position dans un tableau*******
+        }
+
+        //Au lieu de tout récrire, on appelle la fonction Start()
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
             Start();
         }
 
-        //Si la touche 2 est press�e, la fonction ActiverCam() est appeler pour activer la cam�ra 2
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            ActiverCam(1);
-        }
-
-        //Si la touche 3 est press�e, la fonction ActiverCam() est appeler pour activer la cam�ra 3
+        //Si la touche 3 est pressée, la fonction ActiverCam() est appeler pour activer la caméra 3
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             ActiverCam(2);
         }
 
-        //Si la touche 4 est press�e, la fonction ActiverCam() est appeler pour activer la cam�ra 4
+        //Si la touche 4 est pressée, la fonction ActiverCam() est appeler pour activer la caméra 4
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             ActiverCam(3);
@@ -53,12 +53,12 @@ public class ControleCamOptimise : MonoBehaviour
     }
 
     public void ActiverCam(int indexCam){
-        //Boucle foreach pour activer la cam�ra selon le num�ro press� et d�sactiver toutes les autres
+        //Boucle foreach pour activer la caméra selon le numéro pressé et désactiver toutes les autres
         foreach(GameObject laCam in lesCameras){
             laCam.SetActive(false);
         }
 
-        lesCameras[indexCam].SetActive(true); //Activation de la cam�ra avec l'index correspondant
+        lesCameras[indexCam].SetActive(true); //Activation de la caméra avec l'index correspondant
 
     }
 }
