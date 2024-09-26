@@ -1,3 +1,8 @@
+/* Fonctionnement et utilité générale du script
+   Script pour le démarrage du jeu avec un bouton
+   Par : Malaïka Abevi
+   Dernière modification : 23/09/2024
+*/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

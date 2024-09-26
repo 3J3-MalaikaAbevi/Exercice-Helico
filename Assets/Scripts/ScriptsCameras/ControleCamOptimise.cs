@@ -1,7 +1,7 @@
 /* Fonctionnement et utilité générale du script
  * Script optimisé de la gestion des caméras
    Par : Malaïka Abevi
-   Dernière modification : 08/09/2024
+   Dernière modification : 23/09/2024
 */
 
 using System.Collections;
@@ -16,7 +16,7 @@ public class ControleCamOptimise : MonoBehaviour
     void Start()
     {
         //Au départ, la 1ère caméra est active et les autres sont désactivées
-        ActiverCam(1); 
+        ActiverCam(1);
     }
 
     // Update is called once per frame
@@ -44,12 +44,7 @@ public class ControleCamOptimise : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             ActiverCam(3);
-        }
-
-
-    //GESTION DE L'AUDIOLISTENER
-    AudioListener.pause = true; //Pour mettre le son global du jeu à 0
-        
+        }      
     }
 
     public void ActiverCam(int indexCam){

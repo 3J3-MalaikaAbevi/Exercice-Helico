@@ -1,3 +1,8 @@
+/* Fonctionnement et utilité générale du script
+   Script pour la gestion du compteur
+   Par : Malaïka Abevi
+   Dernière modification : 23/09/2024
+*/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,9 +37,14 @@ public class GestionCompteur : MonoBehaviour
             //On désactive le moteur dans chaque hélice pour que l'hélico tombe
             foreach(GameObject unHelice in heliceRef){
                 unHelice.GetComponent<TournerHelice>().moteurEnMarche = false;
+                //On désactive la possibilité de démarrer le moteur en cliquant sur Entrer
+                unHelice.GetComponent<TournerHelice>().finJeu = true;
             }
+
+            //Et on fait exploser l'hélico en appelant la fonction dans le script du controle de l'hélico
+            helicopterRef.GetComponent<ControlerHelico>().ExploserHelico();
         }
-        //convertir la valeur en texte et l'affiche
+        //Convertir la valeur du compteur en texte et l'afficher
         texteCompteur.text = valCompteur.ToString();      
      }
 

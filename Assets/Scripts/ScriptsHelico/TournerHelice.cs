@@ -2,7 +2,7 @@
    Gestion de la rotation d'une hélice
    Gestion du démarrage et de l'arrét, de la vitesse et de l'accélération d'une hélice
    Par : Malaïka Abevi
-   Dernière modification : 08/09/2024
+   Dernière modification : 25/09/2024
 */
 
 using System.Collections;
@@ -17,11 +17,12 @@ public class TournerHelice : MonoBehaviour
     public float acceleration;    //Variable float pour la gestion de l'accéleration de la rotation de l'hélice
 
     public bool moteurEnMarche;    //Variable booléenne pour déterminer si le moteur de l'hélicopter est en marche ou non
+    public bool finJeu; //Variable pour savoir si la partie est terminée ou non 
 
     void Update()
     {
         //Si la touche Entrer est appuyée, on démarre ou arréte le moteur
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && !finJeu)
         {
             moteurEnMarche = !moteurEnMarche;
         }
