@@ -193,6 +193,15 @@ public class ControlerHelico : MonoBehaviour
             ExploserHelico(); //On appelle la fonction pour l'explosion de l'hélico 
             finJeu = true; //On indique que la partie est terminée
         }
+
+        if(infoCollision.gameObject.name == "Drone" || infoCollision.gameObject.name == "Dome"){
+            ExploserHelico(); //On appelle la fonction pour l'explosion de l'hélico 
+            finJeu = true; //On indique que la partie est terminée
+        }
+
+        if(infoCollision.gameObject.name == "PlatformeAtterrissage" && GetComponent<GestionCompteur>().valCompteur > 0){
+            GetComponent<GestionVictoire>().victoire = true;
+        }
     }
 
     //Script pour exploser l'hélico
