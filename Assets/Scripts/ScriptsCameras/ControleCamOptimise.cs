@@ -13,12 +13,6 @@ public class ControleCamOptimise : MonoBehaviour
     //D�clarations des variables  
     public GameObject[] lesCameras; //Tableau pour enregistrer les caméras é controler, bien plus optimale
 
-    void Start()
-    {
-        //Au départ, la 1ère caméra est active et les autres sont désactivées
-        ActiverCam(1);
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -31,7 +25,7 @@ public class ControleCamOptimise : MonoBehaviour
         //Au lieu de tout récrire, on appelle la fonction Start()
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            Start();
+            ActiverCam(1);
         }
 
         //Si la touche 3 est pressée, la fonction ActiverCam() est appeler pour activer la caméra 3

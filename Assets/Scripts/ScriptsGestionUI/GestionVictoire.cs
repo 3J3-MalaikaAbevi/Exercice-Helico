@@ -16,7 +16,7 @@ public class GestionVictoire : MonoBehaviour
                 unElement.SetActive(false);
             }
 
-            //Et désactiver le texte de félicitations
+            //Et activer le texte de félicitations
             texteVictoire.gameObject.SetActive(true);
         } 
     }

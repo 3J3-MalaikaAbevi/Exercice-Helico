@@ -36,7 +36,10 @@ public class ControlerHelico : MonoBehaviour
     public GameObject heliceArriere; //Le GameObject de l'hélice arrière 
 
     public GameObject explosion;  //Variable pour l'explosion (animation/particules) de l'hélico
+    public GameObject[] lesEclaboussures; //Tableau pour prendre les deux systèmes de particules pour l'hélico
+
     public GameObject controleCam; //Gameobject du gestionnaire de caméra (servira pour le changement de caméra lors d'une explosion)
+    public GameObject leCanvas; //GameObject du canvas pour accéder au script de victoire
 
 
     [Header ("LES AUDIOCLIPS")]
@@ -181,7 +184,39 @@ public class ControlerHelico : MonoBehaviour
             laSourceAudio.PlayOneShot(sonBidon); //On fait jouer une fois le son du bidon recolté
             quantiteEssence += 30; //On augmente la quantité d'essence de l'hélico
         }
+
+        //Gestion de l'entrée en collision avec l'eau 
+        if(infoCollider.gameObject.name == "cubeEau"){
+            foreach(GameObject coteEclabout in lesEclaboussures){
+                coteEclabout.SetActive(true);
+            }
+        }
     }
+
+    void OnTriggerStay(Collider infoCollider){
+        if(infoCollider.gameObject.name == "cubeEau"){
+            foreach(GameObject coteEclabout in lesEclaboussures){
+            ParticleSystem eclaboutParticule = coteEclabout.GetComponent<ParticleSystem>();
+            // ParticleSystem.MainModule eclaboutMain = eclaboutParticule.main; 
+            //pour modifier la quantité de particules émises alors il faut :
+            ParticleSystem.EmissionModule eclaboutEmission = eclaboutParticule.emission;
+                if(vitesseAvant <= 0){
+                    eclaboutEmission.rateOverTime = 0;
+                }
+                else if(vitesseAvant > 0){
+                    eclaboutEmission.rateOverTime = 5 * vitesseAvant;
+                }
+            }
+        }
+    }    
+
+    void OnTriggerExit(Collider infoCollider){
+        if(infoCollider.gameObject.name == "cubeEau"){
+            foreach(GameObject coteEclabout in lesEclaboussures){
+                coteEclabout.SetActive(false);
+            }
+        }        
+    }    
 
     void OnCollisionEnter(Collision infoCollision){
 
@@ -200,7 +235,7 @@ public class ControlerHelico : MonoBehaviour
         }
 
         if(infoCollision.gameObject.name == "PlatformeAtterrissage" && GetComponent<GestionCompteur>().valCompteur > 0){
-            GetComponent<GestionVictoire>().victoire = true;
+            leCanvas.GetComponent<GestionVictoire>().victoire = true;
         }
     }
 
